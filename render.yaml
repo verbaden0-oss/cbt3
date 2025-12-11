@@ -22,7 +22,7 @@ services:
           name: cbt-db
           property: connectionString
       - key: CORS_ORIGIN
-        value: https://cbt-frontend.onrender.com
+        value: https://cbt-frontend-00t1.onrender.com
 
   # Frontend (Static Site)
   - type: static
