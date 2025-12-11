@@ -152,3 +152,218 @@ body {
 .animate-slide-up {
   animation: slide-up 0.3s ease-out;
 }
+
+/* ==================== */
+/*   PREMIUM ANIMATIONS */
+/* ==================== */
+
+/* Shimmer Effect */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.2) 50%,
+      transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+/* Floating Animation */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  25% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+
+  75% {
+    transform: translateY(-5px) rotate(-1deg);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Glow Pulse */
+@keyframes glow-pulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.3),
+      0 0 20px rgba(74, 144, 226, 0.1);
+  }
+
+  50% {
+    box-shadow: 0 0 20px rgba(74, 144, 226, 0.5),
+      0 0 40px rgba(74, 144, 226, 0.2);
+  }
+}
+
+.animate-glow {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* Gradient Background Animation */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  background: linear-gradient(-45deg,
+      var(--color-primary),
+      var(--color-secondary),
+      #667eea,
+      #764ba2);
+  background-size: 400% 400%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+/* Scale on Hover */
+.hover-scale {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Ripple Effect Helper */
+.ripple-container {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Enhanced Glass Card */
+.glass-card-premium {
+  @apply glass rounded-2xl p-6;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.glass-card-premium:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.12),
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Staggered Animation for Lists */
+.stagger-fade>* {
+  animation: fade-in 0.5s ease-out backwards;
+}
+
+.stagger-fade>*:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.stagger-fade>*:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.stagger-fade>*:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+.stagger-fade>*:nth-child(4) {
+  animation-delay: 0.2s;
+}
+
+.stagger-fade>*:nth-child(5) {
+  animation-delay: 0.25s;
+}
+
+.stagger-fade>*:nth-child(6) {
+  animation-delay: 0.3s;
+}
+
+/* Login Background */
+.login-bg {
+  position: relative;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.login-bg::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background:
+    radial-gradient(circle at 20% 80%, rgba(74, 144, 226, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 80% 20%, rgba(80, 227, 194, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(102, 126, 234, 0.08) 0%, transparent 60%);
+  animation: gradient-shift 15s ease-in-out infinite;
+}
+
+/* Success Animation */
+@keyframes success-pop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-success {
+  animation: success-pop 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Error Shake */
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20%,
+  60% {
+    transform: translateX(-8px);
+  }
+
+  40%,
+  80% {
+    transform: translateX(8px);
+  }
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
+}
