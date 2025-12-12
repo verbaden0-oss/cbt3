@@ -19,15 +19,26 @@ const allowedOrigins = [
   'http://localhost:3000'
 ];
 
+// Add CORS_ORIGIN from env if provided
+if (process.env.CORS_ORIGIN && !allowedOrigins.includes(process.env.CORS_ORIGIN)) {
+  allowedOrigins.push(process.env.CORS_ORIGIN);
+}
+
 const corsOptions = {
   origin: function (origin, callback) {
-    // Allow requests with no origin (mobile apps, curl, etc.)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin) || process.env.CORS_ORIGIN === origin) {
+    // Allow requests with no origin only in development (for tools like Postman, curl)
+    if (!origin) {
+      if (process.env.NODE_ENV === 'production') {
+        return callback(new Error('CORS: No origin header in production'));
+      }
+      return callback(null, true);
+    }
+    
+    if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(null, true); // Allow all for now, but log
-      console.log('CORS request from:', origin);
+      console.warn(`[CORS] Blocked request from unauthorized origin: ${origin}`);
+      callback(new Error(`CORS: Origin ${origin} is not allowed`));
     }
   },
   credentials: true,

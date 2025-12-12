@@ -4,7 +4,13 @@ const pool = require('../db/db');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'dev_secret';
+// JWT_SECRET is required in production
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET && process.env.NODE_ENV === 'production') {
+  throw new Error('JWT_SECRET environment variable is required in production');
+}
+// Fallback only for development
+const JWT_SECRET_FINAL = JWT_SECRET || 'dev_secret_only_for_local_development';
 
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
@@ -20,7 +26,7 @@ router.post('/login', async (req, res) => {
       const ok = await bcrypt.compare(password, user.password_hash);
       if (!ok) return res.status(401).json({ error: 'Invalid credentials' });
 
-      const token = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: '7d' });
+      const token = jwt.sign({ userId: user.id }, JWT_SECRET_FINAL, { expiresIn: '7d' });
       return res.json({ user: { id: user.id, email: user.email }, token });
     } else {
       // User does not exist, create new account
@@ -31,7 +37,7 @@ router.post('/login', async (req, res) => {
       );
 
       const newUserId = insertResult.rows[0].id;
-      const token = jwt.sign({ userId: newUserId }, JWT_SECRET, { expiresIn: '7d' });
+      const token = jwt.sign({ userId: newUserId }, JWT_SECRET_FINAL, { expiresIn: '7d' });
       return res.json({ user: { id: newUserId, email: email }, token, isNewUser: true });
     }
   } catch (err) {
