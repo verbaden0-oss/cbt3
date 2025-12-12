@@ -34,4 +34,5 @@ module.exports = {
         console.log(`[DB] Query: ${text} | Params: ${JSON.stringify(params)}`);
         return pool.query(text, params);
     },
+    pool, // Export the pool instance for transactions
 };

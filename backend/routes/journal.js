@@ -41,7 +41,8 @@ router.post('/', async (req, res) => {
 
     let client;
     try {
-        client = await pool.connect();
+        // Access the raw pool object from the db module wrapper
+        client = await pool.pool.connect();
         await client.query('BEGIN');
 
         // 1. Insert Journal Entry
