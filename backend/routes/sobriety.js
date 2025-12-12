@@ -10,7 +10,8 @@ router.get('/', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM SobrietyLog WHERE user_id = $1', [req.userId]);
         if (result.rows.length === 0) {
-            return res.status(404).json({ error: 'Sobriety log not found.' });
+            // Return default empty log instead of 404 for new users
+            return res.json({ start_date: null, current_streak: 0, relapses_json: null });
         }
         res.json(result.rows[0]);
     } catch (err) {

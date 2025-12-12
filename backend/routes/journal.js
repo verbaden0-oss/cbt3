@@ -69,7 +69,8 @@ router.post('/', async (req, res) => {
         res.status(500).json({ error: 'Server error while creating journal entry' });
     } finally {
         client.release();
-    });
+    }
+});
 
 // Delete a journal entry
 router.delete('/:id', async (req, res) => {
