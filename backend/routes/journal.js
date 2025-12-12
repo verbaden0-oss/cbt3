@@ -35,6 +35,10 @@ router.post('/', async (req, res) => {
     const userId = req.userId;
     const { date, mood_rating, note, trigger_ids } = req.body;
 
+    if (mood_rating < 1 || mood_rating > 10) {
+        return res.status(400).json({ error: 'Mood rating must be between 1 and 10' });
+    }
+
     const client = await pool.connect();
     try {
         await client.query('BEGIN');
