@@ -26,8 +26,9 @@ services:
         value: https://cbt-frontend-00t1.onrender.com
 
   # Frontend (Static Site)
-  - type: static
+  - type: web
     name: cbt-frontend
+    env: static
     rootDir: frontend
     buildCommand: npm install && npm run build
     staticPublishPath: build
