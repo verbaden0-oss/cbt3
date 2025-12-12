@@ -220,61 +220,61 @@ export default function Journal() {
             <p className="text-xs">Начни вести дневник сегодня</p>
           </Card>
         ) : (
-        ): (
-            entries.map((e) => (
-        <SwipeableCard
-          key={e.id}
-          onDelete={() => e.id && deleteEntry(e.id)}
-          className="mb-3"
-        >
-          <Card className="press-scale border-none shadow-none">
-            <div className="flex items-start gap-3">
-              {/* Mood indicator */}
-              <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-lg flex-shrink-0 ${e.mood_rating >= 7 ? 'bg-green-100 dark:bg-green-900/30' :
-                e.mood_rating >= 4 ? 'bg-yellow-100 dark:bg-yellow-900/30' :
-                  'bg-red-100 dark:bg-red-900/30'
-                }`}>
-                {getMoodEmoji(e.mood_rating)}
-              </div>
 
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between mb-1">
-                  <span className={`text-sm font-bold ${e.mood_rating >= 7 ? 'text-green-600 dark:text-green-400' :
-                    e.mood_rating >= 4 ? 'text-yellow-600 dark:text-yellow-400' :
-                      'text-red-600 dark:text-red-400'
+          entries.map((e) => (
+            <SwipeableCard
+              key={e.id}
+              onDelete={() => e.id && deleteEntry(e.id)}
+              className="mb-3"
+            >
+              <Card className="press-scale border-none shadow-none">
+                <div className="flex items-start gap-3">
+                  {/* Mood indicator */}
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-lg flex-shrink-0 ${e.mood_rating >= 7 ? 'bg-green-100 dark:bg-green-900/30' :
+                    e.mood_rating >= 4 ? 'bg-yellow-100 dark:bg-yellow-900/30' :
+                      'bg-red-100 dark:bg-red-900/30'
                     }`}>
-                    {e.mood_rating}/10
-                  </span>
-                  <span className="text-xs text-text-secondary">
-                    {new Date(e.date).toLocaleDateString('ru-RU', {
-                      day: 'numeric',
-                      month: 'short'
-                    })}
-                  </span>
-                </div>
-
-                <p className="text-sm text-text-primary whitespace-pre-wrap line-clamp-3">
-                  {e.note}
-                </p>
-
-                {/* Triggers */}
-                {e.trigger_ids && e.trigger_ids.length > 0 && (
-                  <div className="mt-2 flex flex-wrap gap-1">
-                    {e.trigger_ids.map((tid) => {
-                      const trigger = triggers.find(t => t.id === tid);
-                      return trigger ? (
-                        <span key={tid} className="px-2 py-0.5 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-xs rounded-full">
-                          {trigger.name}
-                        </span>
-                      ) : null;
-                    })}
+                    {getMoodEmoji(e.mood_rating)}
                   </div>
-                )}
-              </div>
-            </div>
-          </Card>
-        </SwipeableCard>
-        ))
+
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className={`text-sm font-bold ${e.mood_rating >= 7 ? 'text-green-600 dark:text-green-400' :
+                        e.mood_rating >= 4 ? 'text-yellow-600 dark:text-yellow-400' :
+                          'text-red-600 dark:text-red-400'
+                        }`}>
+                        {e.mood_rating}/10
+                      </span>
+                      <span className="text-xs text-text-secondary">
+                        {new Date(e.date).toLocaleDateString('ru-RU', {
+                          day: 'numeric',
+                          month: 'short'
+                        })}
+                      </span>
+                    </div>
+
+                    <p className="text-sm text-text-primary whitespace-pre-wrap line-clamp-3">
+                      {e.note}
+                    </p>
+
+                    {/* Triggers */}
+                    {e.trigger_ids && e.trigger_ids.length > 0 && (
+                      <div className="mt-2 flex flex-wrap gap-1">
+                        {e.trigger_ids.map((tid) => {
+                          const trigger = triggers.find(t => t.id === tid);
+                          return trigger ? (
+                            <span key={tid} className="px-2 py-0.5 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-xs rounded-full">
+                              {trigger.name}
+                            </span>
+                          ) : null;
+                        })}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </Card>
+            </SwipeableCard>
+          ))
         )}
       </div>
     </div>
