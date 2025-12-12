@@ -18,9 +18,7 @@ services:
       - key: JWT_SECRET
         generateValue: true
       - key: DATABASE_URL
-        fromDatabase:
-          name: cbt-db
-          property: connectionString
+        value: postgresql://neondb_owner:npg_bMVcwNd5mIW8@ep-shiny-wildflower-a1xellrj-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
       - key: CORS_ORIGIN
         value: https://cbt-frontend-00t1.onrender.com
 
@@ -51,11 +49,4 @@ services:
         source: /*
         destination: /index.html
 
-# PostgreSQL Database
-databases:
-  - name: cbt-db
-    region: frankfurt
-    plan: free
-    databaseName: cbt_therapy
-    user: cbt_user
-    ipAllowList: []
+
