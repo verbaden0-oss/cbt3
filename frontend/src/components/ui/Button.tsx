@@ -1,10 +1,11 @@
 import React from 'react';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    variant?: 'primary' | 'secondary' | 'accent' | 'danger' | 'ghost' | 'gradient';
+    variant?: 'primary' | 'secondary' | 'accent' | 'danger' | 'ghost' | 'gradient' | 'outline';
     size?: 'sm' | 'md' | 'lg';
     isLoading?: boolean;
     fullWidth?: boolean;
+    glow?: boolean;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -14,50 +15,63 @@ export const Button: React.FC<ButtonProps> = ({
     size = 'md',
     isLoading = false,
     fullWidth = false,
+    glow = false,
     disabled,
     ...props
 }) => {
     const baseStyles = `
-        inline-flex items-center justify-center rounded-xl font-medium 
-        transition-all duration-300 ease-out
-        focus:outline-none focus:ring-2 focus:ring-offset-2 
+        relative inline-flex items-center justify-center rounded-xl font-medium 
+        transition-all duration-300 ease-smooth
+        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background
         disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none
         active:scale-[0.98]
+        btn-3d
     `;
 
     const variants: Record<string, string> = {
         primary: `
             bg-primary text-white 
-            hover:bg-opacity-90 hover:shadow-lg hover:shadow-primary/25
+            hover:bg-primary-light
             focus:ring-primary
+            shadow-md hover:shadow-lg hover:shadow-primary/20
         `,
         secondary: `
             bg-secondary text-white 
-            hover:bg-opacity-90 hover:shadow-lg hover:shadow-secondary/25
+            hover:bg-secondary-light
             focus:ring-secondary
+            shadow-md hover:shadow-lg hover:shadow-secondary/20
         `,
         accent: `
             bg-accent text-white 
-            hover:bg-opacity-90 hover:shadow-lg hover:shadow-accent/25
+            hover:bg-accent-light
             focus:ring-accent
+            shadow-md hover:shadow-lg hover:shadow-accent/20
         `,
         danger: `
             bg-error text-white 
-            hover:bg-opacity-90 hover:shadow-lg hover:shadow-error/25
+            hover:bg-error-light
             focus:ring-error
+            shadow-md hover:shadow-lg hover:shadow-error/20
         `,
         ghost: `
             bg-transparent text-text-primary 
-            hover:bg-black/5 dark:hover:bg-white/10
-            focus:ring-gray-400
+            hover:bg-surface-elevated
+            focus:ring-primary/50
+            border border-transparent hover:border-border
         `,
         gradient: `
-            bg-gradient-to-r from-primary via-purple-500 to-secondary 
+            bg-gradient-to-r from-primary via-primary-light to-accent
             text-white font-semibold
-            hover:shadow-lg hover:shadow-purple-500/30
+            shadow-lg hover:shadow-xl
             hover:brightness-110
-            focus:ring-purple-500
-            bg-size-200 animate-gradient
+            focus:ring-primary
+            bg-[length:200%_auto] hover:bg-right
+        `,
+        outline: `
+            bg-transparent text-primary
+            border-2 border-primary
+            hover:bg-primary hover:text-white
+            focus:ring-primary
         `,
     };
 
@@ -67,6 +81,8 @@ export const Button: React.FC<ButtonProps> = ({
         lg: 'px-8 py-3.5 text-lg gap-3',
     };
 
+    const glowStyles = glow ? 'animate-glow' : '';
+
     return (
         <button
             className={`
@@ -74,6 +90,7 @@ export const Button: React.FC<ButtonProps> = ({
                 ${variants[variant]}
                 ${sizes[size]}
                 ${fullWidth ? 'w-full' : ''}
+                ${glowStyles}
                 ${className}
             `.replace(/\s+/g, ' ').trim()}
             disabled={disabled || isLoading}
